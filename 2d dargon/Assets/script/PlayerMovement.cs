@@ -48,10 +48,14 @@ public class PlayerMovement : MonoBehaviour
                 body.velocity = Vector2.zero;
             }
             else
-                body.gravityScale = 7;
+                body.gravityScale = 1;
 
             if (Input.GetKey(KeyCode.Space))
+            {
                 Jump();
+                Debug.Log("It working ");
+            }
+             
         }
         else
             wallJumpCooldown += Time.deltaTime;
@@ -59,10 +63,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (isGrounded())
+        if (isGrounded() )
         {
             body.velocity = new Vector2(body.velocity.x, jumpPower);
-            anim.SetTrigger("Jump");
+            anim.SetTrigger("jump");
+            Debug.Log("It working 1");
         }
         else if (onWall() && !isGrounded())
         {
@@ -70,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
                 transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                Debug.Log("It working 2");
             }
             else
                 body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
