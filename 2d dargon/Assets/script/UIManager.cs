@@ -1,23 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private AudioClip gameOverSound;
+
+    private void Awake()
     {
-        
+        PauseGame(false);
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseUI.activeInHierarchy)
+                PauseGame(false);
+            else
+                PauseGame(true);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    //Game over function
+    public void GameOver()
     {
-        
+        gameOverUI.SetActive(true);
+
     }
 
-    public int GameOver()
+    //Pause menu functions
+    public void PauseGame(bool _status)
     {
-        return 0;
+        pauseUI.SetActive(_status);
+        Time.timeScale = System.Convert.ToInt32(!_status);
+    }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+  
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
