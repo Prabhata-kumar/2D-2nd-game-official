@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
+    [SerializeField] private AudioClip jumpSound;
 
     private void Awake()
     {
@@ -63,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        
+        SoundManager.instance.PlaySound(jumpSound);
         if (isGrounded() )
         {
             body.velocity = new Vector2(body.velocity.x, jumpPower);
@@ -92,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool onWall()
     {
+
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
         return raycastHit.collider != null;
     }
